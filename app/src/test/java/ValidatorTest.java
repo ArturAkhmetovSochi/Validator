@@ -1,35 +1,35 @@
 import hexlet.code.Validator;
 import org.junit.jupiter.api.Test;
-import static org.assertj.core.api.Assertions.assertThat;
+
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ValidatorTest {
     @Test
-    void testIsValid(){
+    void testStringSchema () {
+
         var v = new Validator();
-
         var schema = v.string();
+        var testStr = "what does the fox say";
 
-// Пока не вызван метод required(), null и пустая строка считаются валидным
-        System.out.println(schema.isValid("")); // true
-        System.out.println(schema.isValid(null)); // true
+        assertTrue(schema.isValid(""));
+        assertTrue(schema.isValid(null));
 
-        System.out.println(schema.required());
+        schema.required();
 
-        System.out.println(schema.isValid(null)); // false
-        System.out.println(schema.isValid("")); // false
-        System.out.println(schema.isValid("what does the fox say")); // true
-        System.out.println(schema.isValid("hexlet")); // true
+        assertFalse(schema.isValid(null));
+        assertFalse(schema.isValid(""));
 
-        System.out.println(schema.contains("wh").isValid("what does the fox say")); // true
-        System.out.println(schema.contains("what").isValid("what does the fox say")); // true
-        System.out.println(schema.contains("whatthe").isValid("what does the fox say")); // false
+        assertTrue(schema.isValid(testStr));
+        assertTrue(schema.isValid("hexlet"));
 
-        System.out.println(schema.isValid("what does the fox say")); // false
-// Здесь уже false, так как добавлена еще одна проверка contains("whatthe")
+        assertTrue(schema.contains("wh").isValid(testStr));
+        assertTrue(schema.contains("what").isValid(testStr));
+        assertFalse(schema.contains("whatthe").isValid(testStr));
 
-// Если один валидатор вызывался несколько раз
-// то последний имеет приоритет (перетирает предыдущий)
-        var schema1 = v.string();
-        System.out.println(schema1.minLength(10).minLength(4).isValid("Hexlet")); // true
+        assertFalse(schema.isValid(testStr));
+
+        assertFalse(schema.minLength(10).isValid(testStr));
+
     }
 }

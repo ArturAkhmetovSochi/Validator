@@ -13,9 +13,9 @@ public final class StringSchema {
     private String contain = "";
     private Boolean required = false;
 
-    public StringSchema required(){
-       this.required = true;
-       return this;
+    public StringSchema required() {
+        this.required = true;
+        return this;
     }
 
     public StringSchema minLength(Integer min) {
@@ -30,13 +30,11 @@ public final class StringSchema {
 
     public Boolean isValid(Object o) {
 
-        if (this.required == true && o == null) {
+        if (this.required == true && (o == null || o.equals(""))) {
             return false;
-        } else if (this.required == true && o.toString().length() < 0) {
+        } else if (o != null && o.toString().length() > minimumLength) {
             return false;
-        } else if (this.minimumLength < o.toString().length()) {
-            return false;
-        } else if ((this.contain != null) && this.contain.length() > 0 && !o.toString().contains(this.contain)) {
+        } else if (o!= null && !o.toString().contains(contain)) {
             return false;
         }
 
@@ -44,4 +42,3 @@ public final class StringSchema {
 
     }
 }
-
