@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ValidatorTest {
     @Test
-    void testStringSchema () {
+    void testStringSchema() {
 
         var v = new Validator();
         var schema = v.string();

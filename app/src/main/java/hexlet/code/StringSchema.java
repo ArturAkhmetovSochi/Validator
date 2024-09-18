@@ -3,8 +3,6 @@ package hexlet.code;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import static java.awt.SystemColor.text;
-
 @NoArgsConstructor
 @Data
 public final class StringSchema {
@@ -30,11 +28,11 @@ public final class StringSchema {
 
     public Boolean isValid(Object o) {
 
-        if (this.required == true && (o == null || o.equals(""))) {
+        if (this.required && (o == null || o.equals(""))) {
             return false;
         } else if (o != null && o.toString().length() > minimumLength) {
             return false;
-        } else if (o!= null && !o.toString().contains(contain)) {
+        } else if (o != null && !o.toString().contains(contain)) {
             return false;
         }
 
