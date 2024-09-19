@@ -1,42 +1,30 @@
 package hexlet.code;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import java.util.function.Predicate;
 
-@NoArgsConstructor
-@Data
-public final class StringSchema {
+public final class StringSchema extends BaseSchema<String> {
 
-    private Integer minimumLength = 100000;
-    private String contain = "";
-    private Boolean required = false;
-
-    public StringSchema required() {
+    public void required() {
         this.required = true;
-        return this;
+        Predicate<Object> isRequired = x -> x instanceof String && !x.equals("");
+        super.addPredicate(isRequired);
     }
 
     public StringSchema minLength(Integer min) {
-        this.minimumLength = min;
+        Predicate<Object> minLength = x -> x.toString().length() >= min;
+        super.addPredicate(minLength);
         return this;
     }
 
     public StringSchema contains(String substring) {
-        this.contain = substring;
+        Predicate<Object> contain = x -> x.toString().contains(substring);
+        super.addPredicate(contain);
         return this;
     }
 
-    public Boolean isValid(Object o) {
-
-        if (this.required && (o == null || o.equals(""))) {
-            return false;
-        } else if (o != null && o.toString().length() > minimumLength) {
-            return false;
-        } else if (o != null && !o.toString().contains(contain)) {
-            return false;
-        }
-
-        return true;
-
+    @Override
+    public boolean isNotCorrectVariable(Object variable) {
+        return !(variable instanceof String) || ((String) variable).isEmpty();
     }
 }
+
