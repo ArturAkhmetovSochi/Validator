@@ -1,4 +1,4 @@
-package hexlet.code;
+package hexlet.code.schema;
 
 import java.util.function.Predicate;
 
@@ -27,4 +27,6 @@ public final class StringSchema extends BaseSchema<String> {
         return !(variable instanceof String) || ((String) variable).isEmpty();
     }
 }
+
+
 
