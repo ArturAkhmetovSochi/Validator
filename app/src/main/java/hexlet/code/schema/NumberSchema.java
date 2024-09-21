@@ -2,12 +2,13 @@ package hexlet.code.schema;
 
 import java.util.function.Predicate;
 
-public final class NumberSchema extends BaseSchema<Number> {
+public final class NumberSchema extends BaseSchema {
 
-    public void required() {
+    public NumberSchema required() {
         this.required = true;
         Predicate<Object> required = x -> x instanceof Integer;
         super.addPredicate(required);
+        return this;
     }
 
     public NumberSchema positive() {
@@ -16,9 +17,10 @@ public final class NumberSchema extends BaseSchema<Number> {
         return this;
     }
 
-    public void range(int begin, int end) {
+    public BaseSchema range(int begin, int end) {
         Predicate<Object> range = x -> (Integer) x >= begin && (Integer) x <= end;
         super.addPredicate(range);
+        return this;
     }
 
     @Override

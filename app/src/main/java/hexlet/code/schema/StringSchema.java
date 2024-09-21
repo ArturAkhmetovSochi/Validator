@@ -2,12 +2,13 @@ package hexlet.code.schema;
 
 import java.util.function.Predicate;
 
-public final class StringSchema extends BaseSchema<String> {
+public final class StringSchema extends BaseSchema {
 
-    public void required() {
+    public StringSchema required() {
         this.required = true;
         Predicate<Object> isRequired = x -> x instanceof String && !x.equals("");
         super.addPredicate(isRequired);
+        return this;
     }
 
     public StringSchema minLength(Integer min) {
