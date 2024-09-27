@@ -3,16 +3,16 @@ package hexlet.code.schemas;
 import java.util.Map;
 import java.util.function.Predicate;
 
-public final class MapSchema extends BaseSchema {
+public final class MapSchema<T> extends BaseSchema<T> {
 
-    public MapSchema required() {
+    public MapSchema<T> required() {
         this.required = true;
         Predicate<Object> required = x -> x instanceof Map<?, ?>;
         super.addPredicate(required);
         return this;
     }
 
-    public MapSchema sizeof(Integer number) {
+    public MapSchema<T> sizeof(Integer number) {
         Predicate<Object> sizeof = x -> x instanceof Map<?, ?> && ((Map<?, ?>) x).size() == number;
         super.addPredicate(sizeof);
         return this;
@@ -23,7 +23,7 @@ public final class MapSchema extends BaseSchema {
         return !(o instanceof Map<?, ?>);
     }
 
-    public MapSchema shape(Map<String, BaseSchema> schemas) {
+    public MapSchema<T> shape(Map<String, BaseSchema> schemas) {
         Predicate<Object> shape = x -> checkData(schemas, (Map<?, ?>) x);
         super.addPredicate(shape);
         return this;
