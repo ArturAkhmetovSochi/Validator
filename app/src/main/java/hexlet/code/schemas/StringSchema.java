@@ -6,7 +6,7 @@ public final class StringSchema extends BaseSchema {
 
     public StringSchema required() {
         this.required = true;
-        Predicate<Object> isRequired = x -> x instanceof String && !((String) x).isEmpty();;
+        Predicate<Object> isRequired = x -> x instanceof String && !((String) x).isEmpty();
         super.addPredicate(isRequired);
         return this;
     }
