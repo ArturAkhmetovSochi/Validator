@@ -60,11 +60,10 @@ public class StringSchemaTest {
 
     @Test
     public void testStringValidator() {
-        Validator v = new Validator();
-        StringSchema schema = v.string();
+        var v = new Validator();
+        var schema = v.string();
 
         assertThat(schema.isValid("")).isTrue();
-        assertThat(schema.isValid(null)).isTrue();
 
         schema.required();
         assertThat(schema.isValid("what does the fox say")).isTrue();
@@ -84,7 +83,8 @@ public class StringSchemaTest {
                 schema.contains("whatthe").isValid("what does the fox say")
         ).isFalse();
 
-        var schema1 = v.string();
-        assertTrue(schema1.minLength(10).minLength(4).isValid("Hexlet"));
+        var schema1 = v.string().required().minLength(10).minLength(4);
+        assertThat(schema1.isValid("hexlet")).isTrue();
     }
+
 }

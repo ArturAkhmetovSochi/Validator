@@ -9,13 +9,13 @@ public final class MapSchema<T> extends BaseSchema<Map<String, String>> {
     public MapSchema<T> required() {
         this.required = true;
         Predicate<Map<String, String>> required = Objects::nonNull;
-        addPredicate(required);
+        predicates.put("required", required);
         return this;
     }
 
     public MapSchema<T> sizeof(Integer number) {
         Predicate<Map<String, String>> sizeof = x -> x.size() == number;
-        addPredicate(sizeof);
+        predicates.put("sizeof", sizeof);
         return this;
     }
 
@@ -26,7 +26,7 @@ public final class MapSchema<T> extends BaseSchema<Map<String, String>> {
 
     public MapSchema<T> shape(Map<String, BaseSchema> schemas) {
         Predicate<Map<String, String>> shape = x -> checkData(schemas, x);
-        addPredicate(shape);
+        predicates.put("shape", shape);
         return this;
     }
 
