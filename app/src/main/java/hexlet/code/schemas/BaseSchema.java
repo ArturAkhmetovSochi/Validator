@@ -10,7 +10,7 @@ public abstract class BaseSchema<T> {
     protected Map<String, Predicate<T>> predicates = new HashMap<>();
 
 
-    public boolean isValid(T t) {
+    public final boolean isValid(T t) {
         if (!this.required && !isNotCorrectVariable(t)) {
             for (Predicate<T> check : predicates.values()) {
                 if (check.test(t)) {
