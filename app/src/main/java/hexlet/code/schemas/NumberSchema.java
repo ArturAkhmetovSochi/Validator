@@ -1,25 +1,26 @@
 package hexlet.code.schemas;
 
+import java.util.Objects;
 import java.util.function.Predicate;
 
-public final class NumberSchema extends BaseSchema {
+public final class NumberSchema extends BaseSchema<Number> {
 
     public NumberSchema required() {
         this.required = true;
-        Predicate<Object> required = x -> x instanceof Integer;
-        super.addPredicate(required);
+        Predicate<Number> required = Objects::nonNull;
+        addPredicate(required);
         return this;
     }
 
     public NumberSchema positive() {
-        Predicate<Object> positive = x -> x instanceof Integer && (int) x > 0 || x == null;
-        super.addPredicate(positive);
+        Predicate<Number> positive = x -> x == null || (int) x > 0;
+        addPredicate(positive);
         return this;
     }
 
-    public BaseSchema range(int begin, int end) {
-        Predicate<Object> range = x -> (Integer) x >= begin && (Integer) x <= end;
-        super.addPredicate(range);
+    public NumberSchema range(int begin, int end) {
+        Predicate<Number> range = x -> (int) x >= begin && (int) x <= end;
+        addPredicate(range);
         return this;
     }
 

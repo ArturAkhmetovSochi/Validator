@@ -1,20 +1,21 @@
 package hexlet.code.schemas;
 
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.Predicate;
 
-public final class MapSchema<T> extends BaseSchema<T> {
+public final class MapSchema<T> extends BaseSchema<Map<String, String>> {
 
     public MapSchema<T> required() {
         this.required = true;
-        Predicate<Object> required = x -> x instanceof Map<?, ?>;
-        super.addPredicate(required);
+        Predicate<Map<String, String>> required = Objects::nonNull;
+        addPredicate(required);
         return this;
     }
 
     public MapSchema<T> sizeof(Integer number) {
-        Predicate<Object> sizeof = x -> x instanceof Map<?, ?> && ((Map<?, ?>) x).size() == number;
-        super.addPredicate(sizeof);
+        Predicate<Map<String, String>> sizeof = x -> x.size() == number;
+        addPredicate(sizeof);
         return this;
     }
 
@@ -24,8 +25,8 @@ public final class MapSchema<T> extends BaseSchema<T> {
     }
 
     public MapSchema<T> shape(Map<String, BaseSchema> schemas) {
-        Predicate<Object> shape = x -> checkData(schemas, (Map<?, ?>) x);
-        super.addPredicate(shape);
+        Predicate<Map<String, String>> shape = x -> checkData(schemas, x);
+        addPredicate(shape);
         return this;
     }
 
